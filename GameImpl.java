@@ -2,6 +2,8 @@ package ep1OOC;
 
 public class GameImpl implements Game {
 
+
+    private Card cards[];
     /**
      * Método que devolve a cor da posição do tabuleiro. Se possui uma cor, significa que é um templo. Caso contrário, é um espaço normal
      * @param position Posição do tabuleiro
@@ -11,11 +13,20 @@ public class GameImpl implements Game {
     {
         return;
     }
+
+    public GameImpl(String nomeAzul, String nomeVermelho)
+    {
+        return;
+    }
+
+    public GameImpl(String nomeAzul, String nomeVermelho, Card newDeck[])
+    {
+        return;
+    }
+
+    public 
     
     Color getSpotColor(Position position);
-    {
-        
-    }
 
     /**
      * Método que devolve a peça que está na posição do tabuleiro
