@@ -6,6 +6,7 @@ public class GameImpl implements Game {
     
 
     private Card cards[];
+    private Spot board[][];
     /**
      * Método que devolve a cor da posição do tabuleiro. Se possui uma cor, significa que é um templo. Caso contrário, é um espaço normal
      * @param position Posição do tabuleiro
@@ -47,6 +48,7 @@ public class GameImpl implements Game {
 
     //oii
     /**
+     * oiii
      * Método que devolve a carta que está na mesa, que será substituída após a próxima jogada
      * @return Um objeto Card que representa a carta na mesa
      */
