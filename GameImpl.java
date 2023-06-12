@@ -26,7 +26,15 @@ public class GameImpl implements Game {
 
     public 
     
-    Color getSpotColor(Position position);
+    Color getSpotColor(Position position)
+    {
+        if(position.getCol() == 2)
+        {
+            if(position.getRow() == 0) return Color.BLUE;
+            if(position.getRow() == 4) return Color.RED;
+        }
+            return Color.NONE;
+    }
 
     /**
      * Método que devolve a peça que está na posição do tabuleiro
