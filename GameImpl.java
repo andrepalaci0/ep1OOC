@@ -2,6 +2,8 @@ package ep1OOC;
 
 public class GameImpl implements Game {
 
+    private Player player1, player2;
+    
 
     private Card cards[];
     /**
