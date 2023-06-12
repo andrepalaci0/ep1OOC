@@ -45,6 +45,7 @@ public class GameImpl implements Game {
 
     //oii
     /**
+     * oiii
      * Método que devolve a carta que está na mesa, que será substituída após a próxima jogada
      * @return Um objeto Card que representa a carta na mesa
      */
