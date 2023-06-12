@@ -41,7 +41,5 @@ public class Piece {
     public boolean isMaster() 
     {
         return this.isMaster;
-
     }
-
 }
