@@ -1,14 +1,21 @@
 package ep1OOC;
-/**
- * Interface que contém métodos que serão chamados para a execução do jogo
- */
-public interface Game {
+
+public class GameImpl implements Game {
+
     /**
      * Método que devolve a cor da posição do tabuleiro. Se possui uma cor, significa que é um templo. Caso contrário, é um espaço normal
      * @param position Posição do tabuleiro
      * @return O enum Color que representa a cor da posição
      */
+    public GameImpl()
+    {
+        return;
+    }
+    
     Color getSpotColor(Position position);
+    {
+        
+    }
 
     /**
      * Método que devolve a peça que está na posição do tabuleiro
@@ -61,4 +68,6 @@ public interface Game {
      * OBS: Esse método é opcional não será utilizado na correção, mas serve para acompanhar os resultados parciais do jogo
      */
     void printBoard();
+
+
 }

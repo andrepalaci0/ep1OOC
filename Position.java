@@ -1,3 +1,4 @@
+package ep1OOC;
 /**
  * Classe usada para definição de estrutura de posições e movimentos do jogo
  */

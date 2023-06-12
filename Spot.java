@@ -1,3 +1,4 @@
+package ep1OOC;
 /**
  * Classe contendo ações e informações sobre cada espaço (quadrado) no tabuleiro
  */

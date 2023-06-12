@@ -1,3 +1,4 @@
+package ep1OOC;
 /**
  * Classe que contém informações das cartas
  */

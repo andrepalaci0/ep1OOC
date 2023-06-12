@@ -1,3 +1,4 @@
+package ep1OOC;
 /**
  * Classe que contém informações e ações básicas relacionadas aos jogadores
  */

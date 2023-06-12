@@ -1,3 +1,4 @@
+package ep1OOC;
 /**
  * Exceção geral para qualquer regra burlada
  */

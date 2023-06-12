@@ -1,3 +1,4 @@
+package ep1OOC;
 /**
  * Enum contendo todas as possíveis cores do jogo
  */

@@ -1,3 +1,4 @@
+package ep1OOC;
 /**
  * Exceção para quando se tenta jogar uma carta que não está na mão do jogador
  */
