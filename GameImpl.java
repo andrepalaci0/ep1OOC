@@ -2,14 +2,15 @@ package ep1OOC;
 
 public class GameImpl implements Game {
 
-
     private Card cards[];
     private Spot board[][];
+
     /**
      * Método que devolve a cor da posição do tabuleiro. Se possui uma cor, significa que é um templo. Caso contrário, é um espaço normal
      * @param position Posição do tabuleiro
      * @return O enum Color que representa a cor da posição
      */
+
     public GameImpl()
     {
         return;
@@ -42,14 +43,17 @@ public class GameImpl implements Game {
      * @param position Posição do tabuleiro
      * @return Um objeto Piece que representa a peça na posição indicada. Se não tiver peça, devolve null
      */
-    Piece getPiece(Position position);
+    Piece getPiece(Position position)
+    {
+        return board[position.getRow()][position.getCol()].getPiece;
 
-    //oii
+    }
+
     /**
-     * oiii
      * Método que devolve a carta que está na mesa, que será substituída após a próxima jogada
      * @return Um objeto Card que representa a carta na mesa
      */
+
     Card getTableCard();
 
     /**
@@ -74,7 +78,7 @@ public class GameImpl implements Game {
      * @exception InvalidCardException Caso uma carta que não está na mão do jogador seja usada
      * @exception InvalidPieceException Caso uma peça que não está no tabuleiro seja usada
      */
-    void makeMove(Card card, Position cardMove, Position currentPos) throws IncorrectTurnOrderException, IllegalMovementException, InvalidCardException, InvalidPieceException;
+    void makeMove(Card card, Position cardMove, Position currentPos) throws IncorrectTurnOrderException, IllegalMovementException, InvalidCardException, InvalidPieceException);
 
     /**
      * Método que confere se um jogador de uma determinada cor venceu o jogo. Critérios de vitória:
@@ -83,6 +87,7 @@ public class GameImpl implements Game {
      * @param color Cor das peças do jogador que confere a condição de vitória
      * @return Um booleano true para caso esteja em condições de vencer e false caso contrário
      */
+    
     boolean checkVictory(Color color);
 
     /**
