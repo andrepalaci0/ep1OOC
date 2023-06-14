@@ -2,7 +2,9 @@ package ep1OOC;
 
 public class GameImpl implements Game {
 
+
     private Player player1, player2;
+
     private Card cards[];
     private Spot board[][] = new Spot[5][5];
 
