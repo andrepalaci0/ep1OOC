@@ -9,8 +9,14 @@ public class Player {
      * @param pieceColor Cor das peças do jogador
      * @param cards Cartas na mão do jogador
      */
-    public Player(String name, Color pieceColor, Card[] cards) {
+    private String playerName;
+    private Color pieceColor;
+    private Card[] cards;
 
+    public Player(String name, Color pieceColor, Card[] cards) {
+        this.playerName = name;
+        this.pieceColor = pieceColor;
+        this.cards = cards;
     }
 
     /**
@@ -21,7 +27,10 @@ public class Player {
      * @param card2 A segunda carta na mão do jogador
      */
     public Player(String name, Color pieceColor, Card card1, Card card2) {
-
+        this.playerName = name;
+        this.pieceColor = pieceColor;
+        this.cards[2] = card1;
+        this.cards[1] = card2;
     }
 
     /**
@@ -29,6 +38,7 @@ public class Player {
      * @return String com o nome do jogador(a)
      */
     public String getName() {
+        if(this.playerName != null) return this.playerName;
         return null;
     }
 
@@ -37,6 +47,7 @@ public class Player {
      * @return Enum Color com a cor das peças do jogador
      */
     public Color getPieceColor() {
+        if(this.pieceColor != null) return this.pieceColor;
         return null;
     }
 
@@ -45,7 +56,7 @@ public class Player {
      * @return Booleano true para caso seja um mestre e false caso contrário
      */
     public Card[] getCards() {
-        return null;
+        return this.cards;
     }
 
     /**
@@ -55,6 +66,18 @@ public class Player {
      * @exception InvalidCardException Caso a carta não esteja na mão do jogador e/ou na mesa
      */
     protected void swapCard(Card oldCard, Card newCard) throws InvalidCardException {
+        boolean inHand = false;
+        int pos = 0;
+        for (int i = 0; i < cards.length; i++) {
+            if(this.cards[i] == oldCard){
+                inHand = true;
+                pos = i;
+            }
+        }
+        if(!inHand) throw new InvalidCardException("Carta não está na mão do jogador");
 
+        //nao sei como conferir se a carta ta na mesa
+        
+        this.cards[pos] = newCard;
     }
 }
