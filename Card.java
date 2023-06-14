@@ -87,7 +87,7 @@ public class Card {
 
         for (int i = 0; i < 5; i++) {
             
-            cartasDoJogo[i] = todasAsCartas.get(i);todasAsCartas.get(i);
+            cartasDoJogo[i] = todasAsCartas.get(i); todasAsCartas.get(i);
 
         }
         

@@ -25,6 +25,7 @@ public class GameImpl implements Game {
      * @param nomeAzul     Nome do jogador azul
      * @param nomeVermelho Nome do jogador vermelho
      */
+
     public GameImpl(String nomeAzul, String nomeVermelho) {
         return;
     }
@@ -33,15 +34,17 @@ public class GameImpl implements Game {
         return;
     }
 
-    public
+    public Color getSpotColor(Position position) {
 
-            Color getSpotColor(Position position) {
         if (position.getCol() == 2) {
+
             if (position.getRow() == 0)
                 return Color.BLUE;
             if (position.getRow() == 4)
                 return Color.RED;
+
         }
+
         return Color.NONE;
     }
 
@@ -52,6 +55,7 @@ public class GameImpl implements Game {
      * @return Um objeto Piece que representa a peça na posição indicada. Se não
      *         tiver peça, devolve null
      */
+
     public Piece getPiece(Position position) {
         return board[position.getRow()][position.getCol()].getPiece();
 
@@ -64,7 +68,11 @@ public class GameImpl implements Game {
      * @return Um objeto Card que representa a carta na mesa
      */
 
-    Card getTableCard();
+    Card getTableCard() {
+
+        return this.tableCard();
+
+    }
 
     /**
      * Método que devolve as informações sobre o jogador com as peças vermelhas
