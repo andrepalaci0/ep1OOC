@@ -14,14 +14,13 @@ public class GameImpl implements Game {
      * @return O enum Color que representa a cor da posição
      */
 
-    public GameImpl()
-    {
+    public GameImpl() {
         return;
     }
 
     /**
      * 
-     * @param nomeAzul Nome do jogador azul
+     * @param nomeAzul     Nome do jogador azul
      * @param nomeVermelho Nome do jogador vermelho
      */
     public GameImpl(String nomeAzul, String nomeVermelho) {
@@ -51,14 +50,15 @@ public class GameImpl implements Game {
      * @return Um objeto Piece que representa a peça na posição indicada. Se não
      *         tiver peça, devolve null
      */
-    Piece getPiece(Position position)
-    {
-        return board[position.getRow()][position.getCol()].getPiece;
+    public Piece getPiece(Position position) {
+        return board[position.getRow()][position.getCol()].getPiece();
 
     }
 
     /**
-     * Método que devolve a carta que está na mesa, que será substituída após a próxima jogada
+     * Método que devolve a carta que está na mesa, que será substituída após a
+     * próxima jogada
+     * 
      * @return Um objeto Card que representa a carta na mesa
      */
 
@@ -104,7 +104,8 @@ public class GameImpl implements Game {
      * @exception InvalidPieceException       Caso uma peça que não está no
      *                                        tabuleiro seja usada
      */
-    void makeMove(Card card, Position cardMove, Position currentPos) throws IncorrectTurnOrderException, IllegalMovementException, InvalidCardException, InvalidPieceException;
+    void makeMove(Card card, Position cardMove, Position currentPos)
+            throws IncorrectTurnOrderException, IllegalMovementException, InvalidCardException, InvalidPieceException;
 
     /**
      * Método que confere se um jogador de uma determinada cor venceu o jogo.
@@ -116,7 +117,7 @@ public class GameImpl implements Game {
      * @return Um booleano true para caso esteja em condições de vencer e false caso
      *         contrário
      */
-    
+
     boolean checkVictory(Color color);
 
     /**
@@ -124,12 +125,32 @@ public class GameImpl implements Game {
      * OBS: Esse método é opcional não será utilizado na correção, mas serve para
      * acompanhar os resultados parciais do jogo
      */
-    void printBoard();
+    public void printBoard() {
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board.length; j++) {
+                if (board[i][j].getPiece().isMaster()) {
+                    if (board[i][j].getPiece().getColor() == Color.BLUE)
+                        System.out.print("BM");
+                    if (board[i][j].getPiece().getColor() == Color.RED)
+                        System.out.print("RM");
 
+                }
+                if (board[i][j].getPiece() != null) {
+                    if (board[i][j].getPiece().getColor() == Color.BLUE)
+                        System.out.print("BP");
+                    if (board[i][j].getPiece().getColor() == Color.RED)
+                        System.out.print("RP");
+                }else{
+                    System.out.print("00");
+                }
+            }
+            System.out.println();
+        }
+    }
 
-   
     /**
      * Método que inicializa o tabuleiro já com as peças
+     * 
      * @param board tabuleiro ainda nao inicializado
      * @return tabuleiro inicializado, já com as peças e lugares vazios
      */
@@ -139,7 +160,7 @@ public class GameImpl implements Game {
             boolean isMaster = false;
             for (int j = 0; j < board.length; j++) {
                 Position auxPos = new Position(i, j);
-                if (i == 0) { //pecas azuis
+                if (i == 0) { // pecas azuis
                     Color auxColor = Color.BLUE;
                     if (j == 2) {
                         isMaster = true;
@@ -150,7 +171,7 @@ public class GameImpl implements Game {
                         board[i][j] = new Spot(auxPiece, auxPos);
                     }
                 }
-                if (i == 4) { //pecas vermelhas
+                if (i == 4) { // pecas vermelhas
                     Color auxColor = Color.RED;
                     if (j == 2) {
                         isMaster = true;
@@ -161,7 +182,7 @@ public class GameImpl implements Game {
                         board[i][j] = new Spot(auxPiece, auxPos);
                     }
                 }
-                //lugares vazios
+                // lugares vazios
                 board[i][j] = new Spot(auxPos);
             }
         }
