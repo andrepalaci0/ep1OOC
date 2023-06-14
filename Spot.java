@@ -85,10 +85,10 @@ public class Spot {
             if (this.piece == null) {
                 this.piece = piece;
                 return;
-            } // acho que tem que fazer alguma coisa aqui pra mostrar que a peça vai ta comendo outra
-            if (this.piece != null)
-            {
-                this.piece = piece; //COMEU UMA PEÇA
+            } // acho que tem que fazer alguma coisa aqui pra mostrar que a peça vai ta
+              // comendo outra
+            if (this.piece != null) {
+                this.piece = piece; // COMEU UMA PEÇA
                 return;
             }
         }
