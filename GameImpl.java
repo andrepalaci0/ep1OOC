@@ -14,10 +14,19 @@ public class GameImpl implements Game {
      * @param position Posição do tabuleiro
      * @return O enum Color que representa a cor da posição
      */
+
+    /**
+     * Construtor void
+     */
     public GameImpl() {
         return;
     }
 
+    /**
+     * 
+     * @param nomeAzul Nome do jogador azul
+     * @param nomeVermelho Nome do jogador vermelho
+     */
     public GameImpl(String nomeAzul, String nomeVermelho) {
         return;
     }
@@ -117,6 +126,13 @@ public class GameImpl implements Game {
      */
     void printBoard();
 
+
+   
+    /**
+     * Método que inicializa o tabuleiro já com as peças
+     * @param board tabuleiro ainda nao inicializado
+     * @return tabuleiro inicializado, já com as peças e lugares vazios
+     */
     private Spot[][] initializeBoard(Spot board[][]) {
         for (int i = 0; i < board.length; i++) {
             Piece auxPiece;
