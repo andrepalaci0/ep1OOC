@@ -116,6 +116,7 @@ public class GameImpl implements Game {
         int auxRow = currentPosition.getRow() + cardMove.getRow();
         if(auxCol > 4 || auxCol < 0) return false;
         if(auxRow > 4 || auxCol < 0) return false;        
+        if(board[currentPosition.getRow()][currentPosition.getCol()].getPiece().getColor() == board[auxRow][auxCol].getPiece().getColor()) return false;
         return true;
     }
 
@@ -142,18 +143,18 @@ public class GameImpl implements Game {
             for (int j = 0; j < board.length; j++) {
                 if (board[i][j].getPiece().isMaster()) {
                     if (board[i][j].getPiece().getColor() == Color.BLUE)
-                        System.out.print("BM");
+                        System.out.print("BM ");
                     if (board[i][j].getPiece().getColor() == Color.RED)
-                        System.out.print("RM");
+                        System.out.print("RM ");
 
                 }
                 if (board[i][j].getPiece() != null) {
                     if (board[i][j].getPiece().getColor() == Color.BLUE)
-                        System.out.print("BP");
+                        System.out.print("BP ");
                     if (board[i][j].getPiece().getColor() == Color.RED)
-                        System.out.print("RP");
+                        System.out.print("RP ");
                 } else {
-                    System.out.print("00");
+                    System.out.print("00 ");
                 }
             }
             System.out.println();
