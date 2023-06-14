@@ -8,8 +8,8 @@ import java.util.Collections;
  * Classe que contém informações das cartas
  */
 
-public class Card 
-{
+public class Card {
+
     /**
      * Construtor que define os principais atributos de uma carta
      * @param name Nome da carta
@@ -21,8 +21,8 @@ public class Card
     private final Color color;
     private final Position[] positions;
 
-    public Card(String name, Color color, Position[] positions) 
-    {
+    public Card(String name, Color color, Position[] positions) {
+
         this.name = name;
         this.color = color;
         this.positions = positions;
@@ -34,8 +34,8 @@ public class Card
      * @return String que contém o nome da carta
      */
 
-    public String getName() 
-    {
+    public String getName() {
+
         return this.name;
 
     }
@@ -45,8 +45,8 @@ public class Card
      * @return Enum Color que contém a cor da carta
      */
 
-    public Color getColor() 
-    {
+    public Color getColor() {
+
         return this.color;
 
     }
@@ -57,8 +57,8 @@ public class Card
      * @return Um array de Position contendo todas as possíveis posições de movimento em relação ao ponto de origem
      */
 
-    public Position[] getPositions() 
-    {
+    public Position[] getPositions() {
+
         return this.positions;
 
     }
@@ -68,8 +68,8 @@ public class Card
      * @return Vetor de cartas com todas as cartas do jogo
      */
 
-    public static Card[] createCards() 
-    {
+    public static Card[] createCards() {
+
         Card[] cartasDoJogo = new Card[5];
 
         List<Card> todasAsCartas = new ArrayList<Card>();
@@ -86,6 +86,7 @@ public class Card
 		Collections.shuffle(todasAsCartas);
 
         for (int i = 0; i < 5; i++) {
+            
             cartasDoJogo[i] = todasAsCartas.get(i);todasAsCartas.get(i);
 
         }
