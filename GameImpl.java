@@ -3,7 +3,6 @@ package ep1OOC;
 public class GameImpl implements Game {
 
     private Player player1, player2;
-
     private Card cards[];
     private Spot board[][] = new Spot[5][5];
 
@@ -15,10 +14,8 @@ public class GameImpl implements Game {
      * @return O enum Color que representa a cor da posição
      */
 
-    /**
-     * Construtor void
-     */
-    public GameImpl() {
+    public GameImpl()
+    {
         return;
     }
 
@@ -54,14 +51,17 @@ public class GameImpl implements Game {
      * @return Um objeto Piece que representa a peça na posição indicada. Se não
      *         tiver peça, devolve null
      */
-    Piece getPiece(Position position);
+    Piece getPiece(Position position)
+    {
+        return board[position.getRow()][position.getCol()].getPiece;
+
+    }
 
     /**
-     * Método que devolve a carta que está na mesa, que será substituída após a
-     * próxima jogada
-     * 
+     * Método que devolve a carta que está na mesa, que será substituída após a próxima jogada
      * @return Um objeto Card que representa a carta na mesa
      */
+
     Card getTableCard();
 
     /**
@@ -104,8 +104,7 @@ public class GameImpl implements Game {
      * @exception InvalidPieceException       Caso uma peça que não está no
      *                                        tabuleiro seja usada
      */
-    void makeMove(Card card, Position cardMove, Position currentPos)
-            throws IncorrectTurnOrderException, IllegalMovementException, InvalidCardException, InvalidPieceException;
+    void makeMove(Card card, Position cardMove, Position currentPos) throws IncorrectTurnOrderException, IllegalMovementException, InvalidCardException, InvalidPieceException;
 
     /**
      * Método que confere se um jogador de uma determinada cor venceu o jogo.
@@ -117,6 +116,7 @@ public class GameImpl implements Game {
      * @return Um booleano true para caso esteja em condições de vencer e false caso
      *         contrário
      */
+    
     boolean checkVictory(Color color);
 
     /**
