@@ -2,7 +2,6 @@ package ep1OOC;
 
 public class GameImpl implements Game {
 
-
     private Player player1, player2;
 
     private Card cards[];
@@ -107,7 +106,20 @@ public class GameImpl implements Game {
      *                                        tabuleiro seja usada
      */
     void makeMove(Card card, Position cardMove, Position currentPos)
-            throws IncorrectTurnOrderException, IllegalMovementException, InvalidCardException, InvalidPieceException;
+            throws IncorrectTurnOrderException, IllegalMovementException, InvalidCardException, InvalidPieceException {
+                moveValidation(cardMove, currentPos);
+    }
+
+    private boolean moveValidation(Position cardMove, Position currentPosition)
+    {   
+        if(board[currentPosition.getRow()][currentPosition.getCol()].getPiece() == null) return false;
+        int auxCol = currentPosition.getCol() + cardMove.getCol();
+        int auxRow = currentPosition.getRow() + cardMove.getRow();
+        if(auxCol > 4 || auxCol < 0) return false;
+        if(auxRow > 4 || auxRow < 0) return false;        
+        if(board[currentPosition.getRow()][currentPosition.getCol()].getPiece().getColor() == board[auxRow][auxCol].getPiece().getColor()) return false;
+        return true;
+    }
 
     /**
      * Método que confere se um jogador de uma determinada cor venceu o jogo.
@@ -132,18 +144,18 @@ public class GameImpl implements Game {
             for (int j = 0; j < board.length; j++) {
                 if (board[i][j].getPiece().isMaster()) {
                     if (board[i][j].getPiece().getColor() == Color.BLUE)
-                        System.out.print("BM");
+                        System.out.print("BM ");
                     if (board[i][j].getPiece().getColor() == Color.RED)
-                        System.out.print("RM");
+                        System.out.print("RM ");
 
                 }
                 if (board[i][j].getPiece() != null) {
                     if (board[i][j].getPiece().getColor() == Color.BLUE)
-                        System.out.print("BP");
+                        System.out.print("BP ");
                     if (board[i][j].getPiece().getColor() == Color.RED)
-                        System.out.print("RP");
-                }else{
-                    System.out.print("00");
+                        System.out.print("RP ");
+                } else {
+                    System.out.print("00 ");
                 }
             }
             System.out.println();
