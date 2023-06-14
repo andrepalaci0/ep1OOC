@@ -112,10 +112,11 @@ public class GameImpl implements Game {
 
     private boolean moveValidation(Position cardMove, Position currentPosition)
     {   
+        if(board[currentPosition.getRow()][currentPosition.getCol()].getPiece() == null) return false;
         int auxCol = currentPosition.getCol() + cardMove.getCol();
         int auxRow = currentPosition.getRow() + cardMove.getRow();
         if(auxCol > 4 || auxCol < 0) return false;
-        if(auxRow > 4 || auxCol < 0) return false;        
+        if(auxRow > 4 || auxRow < 0) return false;        
         if(board[currentPosition.getRow()][currentPosition.getCol()].getPiece().getColor() == board[auxRow][auxCol].getPiece().getColor()) return false;
         return true;
     }
