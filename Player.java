@@ -33,7 +33,7 @@ public class Player {
         this.playerName = name;
         this.pieceColor = pieceColor;
         this.cards[2] = card1;
-        this.cards[1] = card2;
+        this.cards[1] = card2; //pq isso ta assim?
     }
 
     /**

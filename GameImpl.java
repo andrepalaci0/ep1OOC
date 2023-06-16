@@ -15,8 +15,8 @@ public class GameImpl implements Game {
 
         this.cards = Card.createCards();
         this.board = Spot.createBoard();
-        this.player1 = new Player("red", Color.RED, this.cards[0], this.cards[2]);
-        this.player2 = new Player("blue", Color.BLUE, this.cards[1], this.cards[3]);
+        this.player1 = new Player("redPlayer", Color.RED, this.cards[0], this.cards[2]);
+        this.player2 = new Player("bluePlayer", Color.BLUE, this.cards[1], this.cards[3]);
         this.tableCard = this.cards[4];
 
         return;
@@ -28,18 +28,38 @@ public class GameImpl implements Game {
      * @param nomeVermelho Nome do jogador vermelho
      */
 
-    public GameImpl(String nomeAzul, String nomeVermelho) {
+    public GameImpl(String nomeAzul, String nomeVermelho) { // tem que conferir a questão das cartas, p ver qual jogador
+                                                            // começa
+        this.cards = Card.createCards();
+        this.board = initializeBoard(board);
+        this.player1 = new Player(nomeAzul, Color.BLUE, this.cards[0], this.cards[2]);
+        this.player2 = new Player(nomeVermelho, Color.RED, this.cards[1], this.cards[3]);
+        this.tableCard = this.cards[4];
         return;
 
     }
 
-    public GameImpl(String nomeAzul, String nomeVermelho, Card newDeck[]) {
+    public GameImpl(String nomeAzul, String nomeVermelho, Card newDeck[]) throws InvalidCardException {
+        if (newDeck.length > 5)
+            throw new InvalidCardException("Invalid Card Deck, too large"); // criar uma exception pro deck?
+        for (int i = 0; i < newDeck.length; i++) {
+            // confere se o deck esta completo
+            if (newDeck[i] == null)
+                throw new InvalidCardException("Invalid Card Deck: deck has empty spaces");
+        }
+        this.cards = newDeck;
+        this.board = initializeBoard(board);
+        this.player1 = new Player(nomeAzul, Color.BLUE, this.cards[0], this.cards[2]);
+        this.player2 = new Player(nomeVermelho, Color.RED, this.cards[1], this.cards[3]);
+        this.tableCard = this.cards[4];
+
         return;
     }
 
     /**
      * Método que devolve a cor da posição do tabuleiro. Se possui uma cor,
      * significa que é um templo. Caso contrário, é um espaço normal
+     * 
      * @param position Posição do tabuleiro
      * @return O enum Color que representa a cor da posição
      */
@@ -80,10 +100,8 @@ public class GameImpl implements Game {
      * @return Um objeto Card que representa a carta na mesa
      */
 
-    Card getTableCard() {
-
-        return this.tableCard();
-
+    public Card getTableCard() {
+        return this.tableCard;
     }
 
     /**
@@ -93,12 +111,10 @@ public class GameImpl implements Game {
      */
 
     public Player getRedPlayer() {
-
         if (player1.getPieceColor() == Color.RED)
             return player1;
         else
             return player2;
-
     }
 
     /**
@@ -108,12 +124,10 @@ public class GameImpl implements Game {
      */
 
     public Player getBluePlayer() {
-
         if (player1.getPieceColor() == Color.BLUE)
             return player1;
         else
             return player2;
-
     }
 
     /**
@@ -133,21 +147,25 @@ public class GameImpl implements Game {
      *                                        tabuleiro seja usada
      */
 
-    void makeMove(Card card, Position cardMove, Position currentPos) 
+    void makeMove(Card card, Position cardMove, Position currentPos)
             throws IncorrectTurnOrderException, IllegalMovementException, InvalidCardException, InvalidPieceException {
-                moveValidation(cardMove, currentPos);
+        moveValidation(cardMove, currentPos);
     }
 
-    private boolean moveValidation(Position cardMove, Position currentPosition)
-    {   
-        if(board[currentPosition.getRow()][currentPosition.getCol()].getPiece() == null) return false;
+    private boolean moveValidation(Position cardMove, Position currentPosition) {
+        if (board[currentPosition.getRow()][currentPosition.getCol()].getPiece() == null)
+            return false;
 
         int auxCol = currentPosition.getCol() + cardMove.getCol();
         int auxRow = currentPosition.getRow() + cardMove.getRow();
 
-        if(auxCol > 4 || auxCol < 0) return false;
-        if(auxRow > 4 || auxRow < 0) return false;        
-        if(board[currentPosition.getRow()][currentPosition.getCol()].getPiece().getColor() == board[auxRow][auxCol].getPiece().getColor()) return false;
+        if (auxCol > 4 || auxCol < 0)
+            return false;
+        if (auxRow > 4 || auxRow < 0)
+            return false;
+        if (board[currentPosition.getRow()][currentPosition.getCol()].getPiece().getColor() == board[auxRow][auxCol]
+                .getPiece().getColor())
+            return false;
 
         return true;
 
