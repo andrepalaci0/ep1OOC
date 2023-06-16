@@ -182,7 +182,30 @@ public class GameImpl implements Game {
      *         contrário
      */
 
-    boolean checkVictory(Color color);
+    public boolean checkVictory(Color color)
+    {
+        if(color == Color.NONE) return false;
+        Color enemColor; //Definindo a cor do inimigo para fins de comparação
+        if(color == Color.BLUE) enemColor = Color.RED;
+        else enemColor = Color.BLUE;
+        boolean enemMasterAlive = false;
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board.length; j++) { // tenta encontrar o master inimigo
+                if(this.board[i][j].getPiece().isMaster() && 
+                   this.board[i][j].getPiece().getColor() == enemColor ) enemMasterAlive = true;
+            }
+        }
+        if(!enemMasterAlive) return true;  //se não encontrado o master inimigo, aconteceu a vitoria
+        if(enemColor == Color.BLUE){ //confere se peças inimigas não estão no templo
+            if(this.board[0][2].getPiece() == null) return false;
+            if(this.board[0][2].getPiece().getColor() == Color.RED) return true;
+            else return false;
+        }else if(enemColor == Color.RED){
+            if(this.board[4][2].getPiece() == null) return false;
+            if(this.board[4][2].getPiece().getColor() == Color.BLUE) return true;
+        }
+        return false;
+    }
 
     /**
      * Método que imprime o tabuleiro no seu estado atual
