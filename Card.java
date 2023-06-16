@@ -70,28 +70,28 @@ public class Card {
 
     public static Card[] createCards() {
 
-        Card[] cartasDoJogo = new Card[5];
+        Card[] gameCards = new Card[5];
 
-        List<Card> todasAsCartas = new ArrayList<Card>();
+        List<Card> allCards = new ArrayList<Card>();
 
-        todasAsCartas.add(new Card("tiger", Color.BLUE, new Position[]{new Position(1, 0), new Position(-2, 0)}));
-        todasAsCartas.add(new Card("crab", Color.BLUE, new Position[]{new Position(0, -2), new Position(-1, 0), new Position(0, 2)}));
-        todasAsCartas.add(new Card("goose", Color.BLUE, new Position[]{new Position(-1, -1), new Position(0, -1), new Position(0, 1), new Position(1, 1)}));
-        todasAsCartas.add(new Card("rabbit", Color.BLUE, new Position[]{new Position(1, -1), new Position(-1, 1), new Position(0, 2)}));
-        todasAsCartas.add(new Card("elephant", Color.RED, new Position[]{new Position(-1, -1), new Position(0, -1), new Position(-1, 1), new Position(0, 1)}));
-        todasAsCartas.add(new Card("frog", Color.RED, new Position[]{new Position(-1, -1), new Position(0, -2), new Position(1, 1)}));
-        todasAsCartas.add(new Card("rooster", Color.RED, new Position[]{new Position(0, -1), new Position(0, 1), new Position(1, -1), new Position(-1, 1)}));
-        todasAsCartas.add(new Card("dragon", Color.RED, new Position[]{new Position(1, -1), new Position(1, 1), new Position(-1, -2), new Position(-1, 2)}));
+        allCards.add(new Card("tiger", Color.BLUE, new Position[]{new Position(1, 0), new Position(-2, 0)}));
+        allCards.add(new Card("crab", Color.BLUE, new Position[]{new Position(0, -2), new Position(-1, 0), new Position(0, 2)}));
+        allCards.add(new Card("goose", Color.BLUE, new Position[]{new Position(-1, -1), new Position(0, -1), new Position(0, 1), new Position(1, 1)}));
+        allCards.add(new Card("rabbit", Color.BLUE, new Position[]{new Position(1, -1), new Position(-1, 1), new Position(0, 2)}));
+        allCards.add(new Card("elephant", Color.RED, new Position[]{new Position(-1, -1), new Position(0, -1), new Position(-1, 1), new Position(0, 1)}));
+        allCards.add(new Card("frog", Color.RED, new Position[]{new Position(-1, -1), new Position(0, -2), new Position(1, 1)}));
+        allCards.add(new Card("rooster", Color.RED, new Position[]{new Position(0, -1), new Position(0, 1), new Position(1, -1), new Position(-1, 1)}));
+        allCards.add(new Card("dragon", Color.RED, new Position[]{new Position(1, -1), new Position(1, 1), new Position(-1, -2), new Position(-1, 2)}));
 
-		Collections.shuffle(todasAsCartas);
+		Collections.shuffle(allCards);
 
         for (int i = 0; i < 5; i++) {
             
-            cartasDoJogo[i] = todasAsCartas.get(i);todasAsCartas.get(i);
+            gameCards[i] = allCards.get(i); allCards.get(i);
 
         }
         
-        return cartasDoJogo;
+        return gameCards;
 
     }
 
