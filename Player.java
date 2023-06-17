@@ -14,6 +14,7 @@ public class Player {
     private String playerName;
     private Color pieceColor;
     private Card[] cards;
+    private boolean starter;
 
     public Player(String name, Color pieceColor, Card[] cards) {
         this.playerName = name;
@@ -65,6 +66,16 @@ public class Player {
         return this.cards;
     }
 
+
+    public void setStarter()
+    {
+        this.starter = true;
+    }
+
+    public boolean isStarter()
+    {
+        return this.starter;
+    }
     /**
      * Método que troca uma carta da mão por outra carta (idealmente da mesa)
      * @param oldCard A carta que será substituída
