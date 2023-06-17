@@ -206,6 +206,13 @@ public class GameImpl implements Game {
             throw new InvalidCardException("Player dont have the card selected in his inventory");
 
         // a jogada de vdd so acontece a partir daqui
+
+        Piece auxPiece = board[currentPos.getRow()][currentPos.getCol()].getPiece();
+        board[currentPos.getRow()][currentPos.getCol()].releaseSpot();
+        board[currentPos.getRow()][currentPos.getCol()].occupySpot(auxPiece);
+        player.swapCard(this.tableCard, card);
+        this.tableCard = card;
+
     }
 
     /**
