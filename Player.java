@@ -13,7 +13,7 @@ public class Player {
 
     private String playerName;
     private Color pieceColor;
-    private Card[] cards;
+    private Card[] cards = new Card[2];
     private boolean starter;
 
     public Player(String name, Color pieceColor, Card[] cards) {
@@ -34,7 +34,7 @@ public class Player {
     public Player(String name, Color pieceColor, Card card1, Card card2) {
         this.playerName = name;
         this.pieceColor = pieceColor;
-        this.cards[2] = card1;
+        this.cards[0] = card1;
         this.cards[1] = card2; //pq isso ta assim?
     }
 

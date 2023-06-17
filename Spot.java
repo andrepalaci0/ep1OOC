@@ -121,30 +121,24 @@ public class Spot {
             for (int j = 0; j < 5; j++) {
 
                 if (i == 0) { // parte de cima do tabuleiro (espaco para as pecas azuis)
-
                     if (j == 2) {
                         board[i][j] = new Spot(new Piece(Color.BLUE, true), new Position(i, j), Color.BLUE);
-
                     } else {
-                        board[i][j] = new Spot(new Piece(Color.BLUE, false), new Position(i, j), Color.BLUE);
+                        board[i][j] = new Spot(new Piece(Color.BLUE, false), new Position(i, j), Color.NONE);
 
                     }
 
-                }
-
-                if (i == 4) { // parte de baixo do tabuleiro (espaco para as pecas vermelhas)
+                }else if (i == 4) { // parte de baixo do tabuleiro (espaco para as pecas vermelhas)
 
                     if (j == 2) {
                         board[i][j] = new Spot(new Piece(Color.RED, true), new Position(i, j), Color.RED);
 
                     } else {
-                        board[i][j] = new Spot(new Piece(Color.RED, false), new Position(i, j), Color.RED);
+                        board[i][j] = new Spot(new Piece(Color.RED, false), new Position(i, j), Color.NONE);
 
                     }
 
-                }
-
-                else {
+                }else {
                     board[i][j] = new Spot(new Position(i, j));
 
                 }
