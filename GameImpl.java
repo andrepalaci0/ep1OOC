@@ -16,8 +16,8 @@ public class GameImpl implements Game {
 
         this.cards = Card.createCards();
         this.board = initializeBoard(board);
-        this.player1 = new Player("redPlayer", Color.RED, this.cards[0], this.cards[2]);
-        this.player2 = new Player("bluePlayer", Color.BLUE, this.cards[1], this.cards[3]);
+        this.player1 = new Player("redPlayer", Color.RED, this.cards[1], this.cards[3]);
+        this.player2 = new Player("bluePlayer", Color.BLUE, this.cards[0], this.cards[2]);
         this.tableCard = this.cards[4];
         if (this.tableCard.getColor() == Color.RED)
             player1.setStarter();
@@ -48,8 +48,8 @@ public class GameImpl implements Game {
     }
 
     public GameImpl(String nomeVermelho, String nomeAzul, Card newDeck[]) throws InvalidCardException {
-        if (newDeck.length > 5)
-            throw new InvalidCardException("Invalid Card Deck, too large"); // criar uma exception pro deck?
+        if (newDeck.length < 5)
+            throw new InvalidCardException("Invalid Card Deck, too small"); // criar uma exception pro deck?
         for (int i = 0; i < newDeck.length; i++) {
             // confere se o deck esta completo
             if (newDeck[i] == null)
@@ -162,47 +162,50 @@ public class GameImpl implements Game {
     public void makeMove(Card card, Position cardMove, Position currentPos)
             throws IncorrectTurnOrderException, IllegalMovementException, InvalidCardException, InvalidPieceException {
         /*
-         * Oq será necessario p esse metodo:
          * 
-         *  UMA unica utilização da função roundvalidation, caso ela retorne falso, essa funcao deve acabar
-         *      o motivo é que caso ela retorne verdadeiro, a contagem de rounds aumenta. Logo
-         *      ela não pode retornar verdadeiro mais de uma vez no chamado desta funcao. Portanto
-         *      deve ser chamada uma unica vez. Recomendo atribuir o valor resultande dela a uma variável boolean.
-         *      ex: boolean roundValid = roundValidation(currentPos);
-         * !!Caso a roundValitation retorne falso, ela deve dar throw new IncorrectTurnOrderException
-         *      A própria função NÃO da throw em exception, cabe a esta função interpretar seu resultado e dar throw
          * 
-         * A função moveValidation pode ser chamada mais de uma vez também, porém creio que utilizar uma variável boolean p ela
-         *      seja uma decisão inteligente também, dado que sua execução não será diferente em outras chamadas.
+         * Talvez a lógica da função moveValidation esteja incompleta, necessária
+         * revisão. Sim ta incompleto, tem q fazer a validação no comment de baixo
          * 
-         * A função moveValidation confere IllegalMovementException e InvalidPieceExceptio porém NÃO os lança. Talvez seja interessante
-         *      implementar o lançamento destas exceções a propria função moveValidation e não a esta funcao (makeMove)
-         * 
-         * Talvez a lógica da função moveValidation esteja incompleta, necessária revisão.
-         * 
-         * A exceção InvalidCardException não é identificada/lançada em nenhum lugar, portanto, isso deve ocorrer nesta função.
+         * inclusive nem existe mais moveValidation
          */
-        moveValidation(cardMove, currentPos);
-        roundValidation(currentPos);
-    }
+        if (board[currentPos.getRow()][currentPos.getCol()].getPiece() == null)
+            throw new InvalidPieceException("No piece in the current position");
 
-    private boolean moveValidation(Position cardMove, Position currentPosition) {
-        if (board[currentPosition.getRow()][currentPosition.getCol()].getPiece() == null)
-            return false;
-
-        int auxCol = currentPosition.getCol() + cardMove.getCol();
-        int auxRow = currentPosition.getRow() + cardMove.getRow();
+        int auxCol = currentPos.getCol() + cardMove.getCol();
+        int auxRow = currentPos.getRow() + cardMove.getRow();
+        /*
+         * tem que fazer uma validação se o movimento que ele ta pedindo pra realizar
+         * é um dos movimentos que a carta permite fazer e, se não for, lançar exception
+         */
 
         if (auxCol > 4 || auxCol < 0)
-            return false;
+            throw new IllegalMovementException("Col coordinate exceeds board limits");
         if (auxRow > 4 || auxRow < 0)
-            return false;
-        if (board[currentPosition.getRow()][currentPosition.getCol()].getPiece().getColor() == board[auxRow][auxCol]
+            throw new IllegalMovementException("Row coordinate exceeds boards limits");
+        if (board[currentPos.getRow()][currentPos.getCol()].getPiece().getColor() == board[auxRow][auxCol]
                 .getPiece().getColor())
-            return false;
+            throw new IllegalMovementException("Trying to move into a same team piece");
 
-        return true;
+        boolean isRoundValid = roundValidation(currentPos);
+        if (!isRoundValid)
+            throw new IncorrectTurnOrderException("Wrong player trying to make a movement");
 
+        Color playerColor = board[currentPos.getRow()][currentPos.getCol()].getPiece().getColor();
+        Player player;
+        if (playerColor == Color.BLUE)
+            player = getBluePlayer();
+        else
+            player = getRedPlayer();
+        int cardIndex = -1;
+        for (int i = 0; i < player.getCards().length; i++) {
+            if (player.getCards()[i] == card)
+                cardIndex = i;
+        }
+        if (cardIndex == -1)
+            throw new InvalidCardException("Player dont have the card selected in his inventory");
+
+        // a jogada de vdd so acontece a partir daqui
     }
 
     /**
@@ -251,8 +254,9 @@ public class GameImpl implements Game {
     }
 
     /**
-     * Funcao que recebe a posição da peça e analisa se a peça que está tentando 
+     * Funcao que recebe a posição da peça e analisa se a peça que está tentando
      * se mover está tentando no turno certo
+     * 
      * @param currentPosition Posição da peça no tabuleiro
      * @return falso caso o turno esteja errado, verdadeiro caso esteja correto
      */
