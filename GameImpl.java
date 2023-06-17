@@ -5,7 +5,8 @@ public class GameImpl implements Game {
     private Player player1, player2;
     private Card tableCard;
     private Card cards[];
-    private Spot board[][];
+    private Spot board[][] = new Spot[5][5];
+    private int roundCounter = 0;
 
     /**
      * Construtor que inicia o jogo as configuracoes basicas do tabuleiro
@@ -14,13 +15,15 @@ public class GameImpl implements Game {
     public GameImpl() {
 
         this.cards = Card.createCards();
-        this.board = Spot.createBoard();
-        this.player1 = new Player("red", Color.RED, this.cards[0], this.cards[2]);
-        this.player2 = new Player("blue", Color.BLUE, this.cards[1], this.cards[3]);
+        this.board = initializeBoard(board);
+        this.player1 = new Player("redPlayer", Color.RED, this.cards[0], this.cards[2]);
+        this.player2 = new Player("bluePlayer", Color.BLUE, this.cards[1], this.cards[3]);
         this.tableCard = this.cards[4];
-
+        if (this.tableCard.getColor() == Color.RED)
+            player1.setStarter();
+        else
+            player2.setStarter();
         return;
-
     }
 
     /**
@@ -28,18 +31,47 @@ public class GameImpl implements Game {
      * @param nomeVermelho Nome do jogador vermelho
      */
 
-    public GameImpl(String nomeAzul, String nomeVermelho) {
+    public GameImpl(String nomeVermelho, String nomeAzul) { // tem que conferir a questão das cartas, p ver qual jogador
+                                                            // começa
+        this.cards = Card.createCards();
+        this.board = initializeBoard(board);
+        this.player1 = new Player(nomeVermelho, Color.RED, this.cards[1], this.cards[3]);
+        this.player2 = new Player(nomeAzul, Color.BLUE, this.cards[0], this.cards[2]);
+        this.tableCard = this.cards[4];
+        if (this.tableCard.getColor() == Color.RED)
+            player1.setStarter();
+        else
+            player2.setStarter();
+
         return;
 
     }
 
-    public GameImpl(String nomeAzul, String nomeVermelho, Card newDeck[]) {
+    public GameImpl(String nomeVermelho, String nomeAzul, Card newDeck[]) throws InvalidCardException {
+        if (newDeck.length > 5)
+            throw new InvalidCardException("Invalid Card Deck, too large"); // criar uma exception pro deck?
+        for (int i = 0; i < newDeck.length; i++) {
+            // confere se o deck esta completo
+            if (newDeck[i] == null)
+                throw new InvalidCardException("Invalid Card Deck: deck has empty spaces");
+        }
+        this.cards = newDeck;
+        this.board = initializeBoard(board);
+        this.player1 = new Player(nomeVermelho, Color.RED, this.cards[1], this.cards[3]);
+        this.player2 = new Player(nomeAzul, Color.BLUE, this.cards[0], this.cards[2]);
+        this.tableCard = this.cards[4];
+        if (this.tableCard.getColor() == Color.RED)
+            player1.setStarter();
+        else
+            player2.setStarter();
+
         return;
     }
 
     /**
      * Método que devolve a cor da posição do tabuleiro. Se possui uma cor,
      * significa que é um templo. Caso contrário, é um espaço normal
+     * 
      * @param position Posição do tabuleiro
      * @return O enum Color que representa a cor da posição
      */
@@ -80,10 +112,8 @@ public class GameImpl implements Game {
      * @return Um objeto Card que representa a carta na mesa
      */
 
-    Card getTableCard() {
-
-        return this.tableCard();
-
+    public Card getTableCard() {
+        return this.tableCard;
     }
 
     /**
@@ -93,12 +123,10 @@ public class GameImpl implements Game {
      */
 
     public Player getRedPlayer() {
-
         if (player1.getPieceColor() == Color.RED)
             return player1;
         else
             return player2;
-
     }
 
     /**
@@ -108,12 +136,10 @@ public class GameImpl implements Game {
      */
 
     public Player getBluePlayer() {
-
         if (player1.getPieceColor() == Color.BLUE)
             return player1;
         else
             return player2;
-
     }
 
     /**
@@ -133,21 +159,47 @@ public class GameImpl implements Game {
      *                                        tabuleiro seja usada
      */
 
-    void makeMove(Card card, Position cardMove, Position currentPos) 
+    public void makeMove(Card card, Position cardMove, Position currentPos)
             throws IncorrectTurnOrderException, IllegalMovementException, InvalidCardException, InvalidPieceException {
-                moveValidation(cardMove, currentPos);
+        /*
+         * Oq será necessario p esse metodo:
+         * 
+         *  UMA unica utilização da função roundvalidation, caso ela retorne falso, essa funcao deve acabar
+         *      o motivo é que caso ela retorne verdadeiro, a contagem de rounds aumenta. Logo
+         *      ela não pode retornar verdadeiro mais de uma vez no chamado desta funcao. Portanto
+         *      deve ser chamada uma unica vez. Recomendo atribuir o valor resultande dela a uma variável boolean.
+         *      ex: boolean roundValid = roundValidation(currentPos);
+         * !!Caso a roundValitation retorne falso, ela deve dar throw new IncorrectTurnOrderException
+         *      A própria função NÃO da throw em exception, cabe a esta função interpretar seu resultado e dar throw
+         * 
+         * A função moveValidation pode ser chamada mais de uma vez também, porém creio que utilizar uma variável boolean p ela
+         *      seja uma decisão inteligente também, dado que sua execução não será diferente em outras chamadas.
+         * 
+         * A função moveValidation confere IllegalMovementException e InvalidPieceExceptio porém NÃO os lança. Talvez seja interessante
+         *      implementar o lançamento destas exceções a propria função moveValidation e não a esta funcao (makeMove)
+         * 
+         * Talvez a lógica da função moveValidation esteja incompleta, necessária revisão.
+         * 
+         * A exceção InvalidCardException não é identificada/lançada em nenhum lugar, portanto, isso deve ocorrer nesta função.
+         */
+        moveValidation(cardMove, currentPos);
+        roundValidation(currentPos);
     }
 
-    private boolean moveValidation(Position cardMove, Position currentPosition)
-    {   
-        if(board[currentPosition.getRow()][currentPosition.getCol()].getPiece() == null) return false;
+    private boolean moveValidation(Position cardMove, Position currentPosition) {
+        if (board[currentPosition.getRow()][currentPosition.getCol()].getPiece() == null)
+            return false;
 
         int auxCol = currentPosition.getCol() + cardMove.getCol();
         int auxRow = currentPosition.getRow() + cardMove.getRow();
 
-        if(auxCol > 4 || auxCol < 0) return false;
-        if(auxRow > 4 || auxRow < 0) return false;        
-        if(board[currentPosition.getRow()][currentPosition.getCol()].getPiece().getColor() == board[auxRow][auxCol].getPiece().getColor()) return false;
+        if (auxCol > 4 || auxCol < 0)
+            return false;
+        if (auxRow > 4 || auxRow < 0)
+            return false;
+        if (board[currentPosition.getRow()][currentPosition.getCol()].getPiece().getColor() == board[auxRow][auxCol]
+                .getPiece().getColor())
+            return false;
 
         return true;
 
@@ -164,14 +216,78 @@ public class GameImpl implements Game {
      *         contrário
      */
 
-    boolean checkVictory(Color color);
+    public boolean checkVictory(Color color) {
+        if (color == Color.NONE)
+            return false;
+        Color enemColor; // Definindo a cor do inimigo para fins de comparação
+        if (color == Color.BLUE)
+            enemColor = Color.RED;
+        else
+            enemColor = Color.BLUE;
+        boolean enemMasterAlive = false;
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board.length; j++) { // tenta encontrar o master inimigo
+                if (this.board[i][j].getPiece().isMaster() &&
+                        this.board[i][j].getPiece().getColor() == enemColor)
+                    enemMasterAlive = true;
+            }
+        }
+        if (!enemMasterAlive)
+            return true; // se não encontrado o master inimigo, aconteceu a vitoria
+        if (enemColor == Color.BLUE) { // confere se peças inimigas não estão no templo
+            if (this.board[0][2].getPiece() == null)
+                return false;
+            if (this.board[0][2].getPiece().getColor() == Color.RED && this.board[0][2].getPiece().isMaster())
+                return true;
+            else
+                return false;
+        } else if (enemColor == Color.RED) {
+            if (this.board[4][2].getPiece() == null)
+                return false;
+            if (this.board[4][2].getPiece().getColor() == Color.BLUE && this.board[4][2].getPiece().isMaster())
+                return true;
+        }
+        return false;
+    }
+
+    /**
+     * Funcao que recebe a posição da peça e analisa se a peça que está tentando 
+     * se mover está tentando no turno certo
+     * @param currentPosition Posição da peça no tabuleiro
+     * @return falso caso o turno esteja errado, verdadeiro caso esteja correto
+     */
+    private boolean roundValidation(Position currentPosition) {
+        Player currentPlayer;
+        if (board[currentPosition.getRow()][currentPosition.getCol()].getPiece().getColor() == getBluePlayer()
+                .getPieceColor())
+            currentPlayer = getBluePlayer();
+        else
+            currentPlayer = getRedPlayer();
+
+        // primeira rodada
+        if (this.roundCounter == 0 && currentPlayer.isStarter()) {
+            this.roundCounter++;
+            return true;
+        }
+        if (this.roundCounter == 0 && !currentPlayer.isStarter())
+            return false; // jogada invalida, jogador errado esta tentando começar
+
+        // demais rodadas
+        if (this.roundCounter % 2 == 1 && !currentPlayer.isStarter()) {
+            this.roundCounter++;
+            return true;
+        } else if (this.roundCounter % 2 == 0 && currentPlayer.isStarter()) {
+            this.roundCounter++;
+            return true;
+        }
+        return false;
+    }
 
     /**
      * Método que imprime o tabuleiro no seu estado atual
      * OBS: Esse método é opcional não será utilizado na correção, mas serve para
      * acompanhar os resultados parciais do jogo
      */
-
     public void printBoard() {
 
         for (int i = 0; i < board.length; i++) {
@@ -212,7 +328,8 @@ public class GameImpl implements Game {
      * Método que inicializa o tabuleiro já com as peças
      * 
      * @param board tabuleiro ainda nao inicializado
-     * @return tabuleiro inicializado, já com as peças e lugares vazios
+     * @return tabuleiro inicializado, já com as peças dos jogadores e lugares
+     *         vazios
      */
 
     private Spot[][] initializeBoard(Spot board[][]) {

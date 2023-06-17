@@ -86,16 +86,16 @@ public class Spot {
      */
 
     protected void occupySpot(Piece piece) throws IllegalMovementException {
-
+        if (this.piece == null) {
+            this.piece = piece;
+            return;
+        }
         if (this.piece.getColor() == piece.getColor()) {
             throw new IllegalMovementException(
                     "Invalid movement: A piece with the same color already occupies this spot");
         } else {
-            if (this.piece == null) {
-                this.piece = piece;
-                return;
-            } // acho que tem que fazer alguma coisa aqui pra mostrar que a peça vai ta
-              // comendo outra
+            // acho que tem que fazer alguma coisa aqui pra mostrar que a peça vai ta
+            // comendo outra
             if (this.piece != null) {
                 this.piece = piece; // COMEU UMA PEÇA
                 return;
@@ -116,29 +116,29 @@ public class Spot {
 
         Spot[][] board = new Spot[5][5];
 
-        for(int i = 0; i < 5; i++) {
+        for (int i = 0; i < 5; i++) {
 
-            for(int j = 0; j < 5; j++) {
+            for (int j = 0; j < 5; j++) {
 
-                if(i == 0) { // parte de cima do tabuleiro (espaco para as pecas azuis)
+                if (i == 0) { // parte de cima do tabuleiro (espaco para as pecas azuis)
 
-                    if(j == 2) {
-                        board[i][j] = new Spot (new Piece(Color.BLUE, true), new Position(i, j), Color.BLUE);
-                    
+                    if (j == 2) {
+                        board[i][j] = new Spot(new Piece(Color.BLUE, true), new Position(i, j), Color.BLUE);
+
                     } else {
                         board[i][j] = new Spot(new Piece(Color.BLUE, false), new Position(i, j), Color.BLUE);
 
-                    } 
+                    }
 
                 }
 
-                if(i == 4) { // parte de baixo do tabuleiro (espaco para as pecas vermelhas)
+                if (i == 4) { // parte de baixo do tabuleiro (espaco para as pecas vermelhas)
 
-                    if(j == 2) {
+                    if (j == 2) {
                         board[i][j] = new Spot(new Piece(Color.RED, true), new Position(i, j), Color.RED);
 
                     } else {
-                        board[i][j] = new Spot(new Piece("red", false), new Position(i, j), Color.RED);
+                        board[i][j] = new Spot(new Piece(Color.RED, false), new Position(i, j), Color.RED);
 
                     }
 
@@ -150,7 +150,7 @@ public class Spot {
                 }
 
             }
-        
+
         }
 
         return board;
