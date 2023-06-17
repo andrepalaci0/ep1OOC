@@ -18,5 +18,16 @@ public class main{
         gameImpl.printTest();
         System.out.println(gameImpl.checkVictory(Color.NONE));
         System.out.println(gameImpl.getTableCard().getName());
+        System.out.println(gameImpl.getTableCard().getColor());
+
+        Player bluePlayer = gameImpl.getBluePlayer();
+        Card[] cards = bluePlayer.getCards();
+        Card card1 = cards[0];
+        System.out.println(card1.getName());
+        Position[] positions = cards[0].getPositions();
+        Position auxPosition = positions[0];
+        Position ogPosition = new Position(0, 2);
+        gameImpl.makeMove(card1, auxPosition, ogPosition);
+        gameImpl.printBoard();
     }
 }
