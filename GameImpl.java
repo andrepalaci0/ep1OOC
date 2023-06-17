@@ -178,7 +178,19 @@ public class GameImpl implements Game {
          * tem que fazer uma validação se o movimento que ele ta pedindo pra realizar
          * é um dos movimentos que a carta permite fazer e, se não for, lançar exception
          */
+        /*
+         * validacao do movimento logo abaixo (FALTA TESTAR)
+         */
 
+        boolean validMove = false;
+        Position posAux[] = card.getPositions();
+
+        for(int i = 0; i < posAux.length; i++) 
+            if(posAux[i] == cardMove) validMove = true;
+
+        if(validMove == false) 
+             throw new IllegalMovementException("The moviment in cardMove doesn't exist in card");
+        
         if (auxCol > 4 || auxCol < 0)
             throw new IllegalMovementException("Col coordinate exceeds board limits");
         if (auxRow > 4 || auxRow < 0)
