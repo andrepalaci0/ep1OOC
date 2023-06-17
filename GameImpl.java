@@ -244,7 +244,6 @@ public class GameImpl implements Game {
             }
         }
         if (!enemMasterAlive) {
-            System.out.println("ta caindo aqui");
             return true; // se não encontrado o master inimigo, aconteceu a vitoria
         }
         if (enemColor == Color.BLUE) { // confere se peças inimigas não estão no templo
