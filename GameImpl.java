@@ -169,6 +169,9 @@ public class GameImpl implements Game {
          * 
          * inclusive nem existe mais moveValidation
          */
+
+        if (card == null || cardMove == null || currentPos == null)
+            throw new IllegalMovementException("Invalid input");
         if (board[currentPos.getRow()][currentPos.getCol()].getPiece() == null)
             throw new InvalidPieceException("No piece in the current position");
 
@@ -185,20 +188,23 @@ public class GameImpl implements Game {
         boolean validMove = false;
         Position posAux[] = card.getPositions();
 
-        for(int i = 0; i < posAux.length; i++) 
-            if(posAux[i] == cardMove) validMove = true;
+        for (int i = 0; i < posAux.length; i++)
+            if (posAux[i] == cardMove)
+                validMove = true;
 
-        if(validMove == false) 
-             throw new IllegalMovementException("The moviment in cardMove doesn't exist in card");
-        
+        if (validMove == false)
+            throw new IllegalMovementException("The moviment in cardMove doesn't exist in card");
+
         if (auxCol > 4 || auxCol < 0)
             throw new IllegalMovementException("Col coordinate exceeds board limits");
         if (auxRow > 4 || auxRow < 0)
             throw new IllegalMovementException("Row coordinate exceeds boards limits");
-        if (board[currentPos.getRow()][currentPos.getCol()].getPiece().getColor() == board[auxRow][auxCol]
-                .getPiece().getColor())
-            throw new IllegalMovementException("Trying to move into a same team piece");
-
+        if (board[currentPos.getRow()][currentPos.getCol()].getPiece() != null && board[auxRow][auxCol]
+                .getPiece() != null) {
+            if (board[currentPos.getRow()][currentPos.getCol()].getPiece().getColor() == board[auxRow][auxCol]
+                    .getPiece().getColor())
+                throw new IllegalMovementException("Trying to move into a same team piece");
+        }
         boolean isRoundValid = roundValidation(currentPos);
         if (!isRoundValid)
             throw new IncorrectTurnOrderException("Wrong player trying to make a movement");
@@ -313,8 +319,7 @@ public class GameImpl implements Game {
      * OBS: Esse método é opcional não será utilizado na correção, mas serve para
      * acompanhar os resultados parciais do jogo
      */
-    public void printTest()
-    {
+    public void printTest() {
         System.out.println(board[4][2].getColor());
     }
 
@@ -357,6 +362,5 @@ public class GameImpl implements Game {
      *         vazios
      */
 
-    
     // fim da classe
 }
