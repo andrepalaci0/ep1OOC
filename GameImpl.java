@@ -156,6 +156,7 @@ public class GameImpl implements Game {
     void makeMove(Card card, Position cardMove, Position currentPos)
             throws IncorrectTurnOrderException, IllegalMovementException, InvalidCardException, InvalidPieceException {
         moveValidation(cardMove, currentPos);
+        roundValidation(card, currentPos);
     }
 
     private boolean moveValidation(Position cardMove, Position currentPosition) {
@@ -219,10 +220,32 @@ public class GameImpl implements Game {
      * acompanhar os resultados parciais do jogo
      */
 
-    private boolean roundValidation()
+    private boolean roundValidation(Card card, Position currentPosition)
     {
+        Player currentPlayer;
+        if(board[currentPosition.getRow()][currentPosition.getCol()].getPiece().getColor() == getBluePlayer().getPieceColor()) currentPlayer = getBluePlayer();
+        else currentPlayer = getRedPlayer();
         
-        return true;
+        //primeira rodada
+        if(this.roundCounter == 0 && currentPlayer.isStarter())
+        {
+            this.roundCounter++;
+            return true;
+        }
+        if(this.roundCounter == 0 && !currentPlayer.isStarter()) return false; //jogada invalida, jogador errado esta tentando começar 
+
+        
+        //demais rodadas
+        if(this.roundCounter % 2 == 1 && !currentPlayer.isStarter())
+        {
+            this.roundCounter++;
+            return true;
+        }else if(this.roundCounter % 2 == 0 && currentPlayer.isStarter())
+        {
+            this.roundCounter++;
+            return true;
+        }
+        return false;
     }
 
     public void printBoard() {
