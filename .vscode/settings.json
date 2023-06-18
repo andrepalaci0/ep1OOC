@@ -1,0 +1,6 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "c:\\Users\\anabe\\Downloads\\ep COO\\lib\\junit-platform-console-standalone-1.10.0-M1.jar"
+    ]
+}
