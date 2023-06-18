@@ -1,4 +1,5 @@
-package ep1OOC;
+package codes;
+
 /**
  * Exceção para quando se tenta jogar uma carta que não está na mão do jogador
  */

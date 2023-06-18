@@ -1,7 +1,7 @@
-package ep1OOC;
+package codes;
 
 public class main{
-    public static void main(String[] args) {
+    public static void main (String[] args) {
         GameImpl gameImpl = new GameImpl("Vermelho", "Azul");
         System.out.println(gameImpl.getRedPlayer().getName());
         System.out.println(gameImpl.getBluePlayer().getName());

@@ -1,4 +1,5 @@
-package ep1OOC;
+package codes;
+
 /**
  * Exceção geral para qualquer regra burlada
  */

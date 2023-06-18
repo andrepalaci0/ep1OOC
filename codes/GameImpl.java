@@ -1,4 +1,4 @@
-package ep1OOC;
+package codes;
 
 public class GameImpl implements Game {
 
