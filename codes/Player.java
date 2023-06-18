@@ -1,3 +1,5 @@
+package codes;
+
 /**
  * Classe que contém informações e ações básicas relacionadas aos jogadores
  */

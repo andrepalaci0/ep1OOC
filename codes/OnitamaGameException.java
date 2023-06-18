@@ -1,3 +1,5 @@
+package codes;
+
 /**
  * Exceção geral para qualquer regra burlada
  */

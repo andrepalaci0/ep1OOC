@@ -1,3 +1,4 @@
+package codes;
 
 /**
  * Classe que contém informações das peças de jogo
