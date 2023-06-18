@@ -227,8 +227,8 @@ public class GameImpl implements Game {
 
         Piece auxPiece = board[currentPos.getRow()][currentPos.getCol()].getPiece();
         board[currentPos.getRow()][currentPos.getCol()].releaseSpot();
-        board[currentPos.getRow()][currentPos.getCol()].occupySpot(auxPiece);
-        player.swapCard(this.tableCard, card);
+        board[auxRow][auxCol].occupySpot(auxPiece);
+        player.swapCard(card, this.tableCard);
         this.tableCard = card;
 
     }
@@ -320,7 +320,7 @@ public class GameImpl implements Game {
      * acompanhar os resultados parciais do jogo
      */
     public void printTest() {
-        System.out.println(board[4][2].getColor());
+        System.out.println(getTableCard().getName());
     }
 
     public void printBoard() {
