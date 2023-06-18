@@ -5,6 +5,7 @@ André Palacio Braga Tivo    13835534
 
 Rodando o ep:
 
-javac *.java
-java main 
+$javac *.java
+$java main 
       ^ pode ser GameImpl também, dependendo de como está sendo testado 
+      ^compilando sem o Junit
