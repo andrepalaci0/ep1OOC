@@ -10,7 +10,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
-public class gameImplTest {
+public class GameImplTest {
 
     private GameImpl game;
 
@@ -24,7 +24,7 @@ public class gameImplTest {
     @Test
     void getSpotColorTest() {
         Color curr =  game.getSpotColor(new Position(4, 2));
-        assertEquals(Color.BLUE, curr);
+        assertEquals(Color.RED, curr);
     }
 
     @Test
@@ -37,7 +37,7 @@ public class gameImplTest {
         assertNull(curr);
     }
 
-    // adc tabbleCard
+    // falta adc tabbleCard
 
     @Test
     void getRedPlayerTest() {
@@ -49,6 +49,14 @@ public class gameImplTest {
     void getBluePlayerTest() {
         Color curr = game.getBluePlayer().getPieceColor();
         assertEquals(Color.BLUE, curr);
+    }
+
+    // falta adc makeMove
+
+    @Test
+    void checkVictoryTest() {
+        boolean actual = game.checkVictory(Color.BLUE);
+        assertFalse(actual);
     }
 
 
