@@ -1,4 +1,3 @@
-package ep1OOC;
 
 public class main{
     public static void main(String[] args) {

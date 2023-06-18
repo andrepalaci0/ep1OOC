@@ -1,4 +1,3 @@
-package ep1OOC;
 
 /**
  * Classe que contém informações das peças de jogo

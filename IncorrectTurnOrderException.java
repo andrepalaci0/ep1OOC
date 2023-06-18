@@ -1,4 +1,3 @@
-package ep1OOC;
 /**
  * Exceção para quando se tenta jogar fora do seu turno
  */

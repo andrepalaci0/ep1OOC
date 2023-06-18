@@ -1,4 +1,3 @@
-package ep1OOC;
 /**
  * Exceção para quando se tenta mover uma peça que não está em jogo
  */
