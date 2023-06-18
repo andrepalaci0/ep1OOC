@@ -12,8 +12,26 @@ import static org.junit.Assert.assertTrue;
 
 public class PieceTest {
 
+    private Piece bluePiece;
+    private Piece redPiece;
     private Piece master;
-    private Piece piece;
 
+    @BeforeEach
+    void setUp() {
+        bluePiece = new Piece(Color.BLUE, false);
+        redPiece = new Piece(Color.RED, false);
+    }
+
+    @Test
+    void getColorTest() {
+        assertEquals(Color.BLUE, bluePiece.getColor());
+        assertEquals(Color.RED, redPiece.getColor());
+    }
+
+    @Test
+    void isMasterTest() {
+        master = new Piece(Color.RED, true);
+        assertAll(()-> assertFalse(redPiece.isMaster()), ()-> assertFalse(bluePiece.isMaster()), ()-> assertTrue(master.isMaster()));
+    }
 
 }
