@@ -361,6 +361,4 @@ public class GameImpl implements Game {
      * @return tabuleiro inicializado, já com as peças dos jogadores e lugares
      *         vazios
      */
-
-    // fim da classe
 }
