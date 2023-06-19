@@ -3,7 +3,6 @@ package codes;
 public class main{
     public static void main(String[] args) {
 
-
         //main de testes:
         
         Card deck[] = new Card[5]; 
