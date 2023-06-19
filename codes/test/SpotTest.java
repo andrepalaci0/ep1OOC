@@ -7,7 +7,6 @@ import org.junit.Test;
 import org.junit.Assert;
 
 public class SpotTest {
-
   private Spot spot;
   private Piece piece;
 
@@ -19,25 +18,24 @@ public class SpotTest {
   }
 
   @Test
-  public void getPositionTest() {
+  public void testGetPosition() {
     Position position = spot.getPosition();
     Assert.assertEquals(2, position.getRow());
     Assert.assertEquals(3, position.getCol());
   }
 
   @Test
-  public void getPieceTest() {
+  public void testGetPiece() {
     Piece retrievedPiece = spot.getPiece();
     Assert.assertEquals(piece, retrievedPiece);
   }
-  
-  // falta adc getColor
 
-  // falta adc occupySpot
+  @Test
+  public void testGetColor() {
+    Color color = spot.getColor();
+    Assert.assertEquals(Color.NONE, color);
+  }
 
-  // falta adc releaseSpot 
-
-  // falta adc createBoard
 
   @Test
   public void testGetPieceNotEquals() {
@@ -45,5 +43,4 @@ public class SpotTest {
     Piece retrievedPiece = spot.getPiece();
     Assert.assertNotEquals(otherPiece, retrievedPiece);
   }
-
 }

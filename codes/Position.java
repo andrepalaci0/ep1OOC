@@ -23,7 +23,6 @@ public class Position {
     public int getRow() {
         return this.row;
     }
-
     /**
      * Método que devolve o valor do eixo Y da posição
      * @return Um valor int representando o eixo Y

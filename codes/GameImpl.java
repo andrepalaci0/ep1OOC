@@ -49,7 +49,7 @@ public class GameImpl implements Game {
 
     public GameImpl(String nomeVermelho, String nomeAzul, Card newDeck[]) throws InvalidCardException {
         if (newDeck.length < 5)
-            throw new InvalidCardException("Invalid Card Deck, too small"); // criar uma exception pro deck?
+            throw new InvalidCardException("Invalid Card Deck, too small"); 
         for (int i = 0; i < newDeck.length; i++) {
             // confere se o deck esta completo
             if (newDeck[i] == null)
@@ -161,40 +161,20 @@ public class GameImpl implements Game {
 
     public void makeMove(Card card, Position cardMove, Position currentPos)
             throws IncorrectTurnOrderException, IllegalMovementException, InvalidCardException, InvalidPieceException {
-        /*
-         * 
-         * 
-         * Talvez a lógica da função moveValidation esteja incompleta, necessária
-         * revisão. Sim ta incompleto, tem q fazer a validação no comment de baixo
-         * 
-         * inclusive nem existe mais moveValidation
-         */
-
+        //validações:
         if (card == null || cardMove == null || currentPos == null)
             throw new IllegalMovementException("Invalid input");
         if (board[currentPos.getRow()][currentPos.getCol()].getPiece() == null)
             throw new InvalidPieceException("No piece in the current position");
-
         int auxCol = currentPos.getCol() + cardMove.getCol();
         int auxRow = currentPos.getRow() + cardMove.getRow();
-        /*
-         * tem que fazer uma validação se o movimento que ele ta pedindo pra realizar
-         * é um dos movimentos que a carta permite fazer e, se não for, lançar exception
-         */
-        /*
-         * validacao do movimento logo abaixo (FALTA TESTAR)
-         */
-
         boolean validMove = false;
         Position posAux[] = card.getPositions();
-
         for (int i = 0; i < posAux.length; i++)
             if (posAux[i] == cardMove)
                 validMove = true;
-
         if (validMove == false)
             throw new IllegalMovementException("The moviment in cardMove doesn't exist in card");
-
         if (auxCol > 4 || auxCol < 0)
             throw new IllegalMovementException("Col coordinate exceeds board limits");
         if (auxRow > 4 || auxRow < 0)
@@ -215,6 +195,7 @@ public class GameImpl implements Game {
             player = getBluePlayer();
         else
             player = getRedPlayer();
+        if(player.getWinner()) throw new OnitamaGameException("The " + player.getPieceColor() + " already won the game");
         int cardIndex = -1;
         for (int i = 0; i < player.getCards().length; i++) {
             if (player.getCards()[i] == card)
@@ -224,7 +205,6 @@ public class GameImpl implements Game {
             throw new InvalidCardException("Player dont have the card selected in his inventory");
 
         // a jogada de vdd so acontece a partir daqui
-
         Piece auxPiece = board[currentPos.getRow()][currentPos.getCol()].getPiece();
         board[currentPos.getRow()][currentPos.getCol()].releaseSpot();
         board[auxRow][auxCol].occupySpot(auxPiece);
@@ -247,11 +227,17 @@ public class GameImpl implements Game {
     public boolean checkVictory(Color color) {
         if (color == Color.NONE)
             return false;
+        Player player;
         Color enemColor; // Definindo a cor do inimigo para fins de comparação
-        if (color == Color.BLUE)
+        if (color == Color.BLUE){ 
+            player = getBluePlayer();
             enemColor = Color.RED;
-        else
+        }
+        else{
+            player = getRedPlayer();
             enemColor = Color.BLUE;
+        }
+        
         boolean enemMasterAlive = false;
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board.length; j++) { // tenta encontrar o master inimigo
@@ -262,20 +248,25 @@ public class GameImpl implements Game {
             }
         }
         if (!enemMasterAlive) {
+            player.setWinner();
             return true; // se não encontrado o master inimigo, aconteceu a vitoria
         }
         if (enemColor == Color.BLUE) { // confere se peças inimigas não estão no templo
             if (this.board[0][2].getPiece() == null)
                 return false;
-            if (this.board[0][2].getPiece().getColor() == Color.RED && this.board[0][2].getPiece().isMaster())
+            if (this.board[0][2].getPiece().getColor() == Color.RED && this.board[0][2].getPiece().isMaster()){
+                player.setWinner();
                 return true;
+            }
             else
                 return false;
         } else if (enemColor == Color.RED) {
             if (this.board[4][2].getPiece() == null)
                 return false;
-            if (this.board[4][2].getPiece().getColor() == Color.BLUE && this.board[4][2].getPiece().isMaster())
+            if (this.board[4][2].getPiece().getColor() == Color.BLUE && this.board[4][2].getPiece().isMaster()){
+                player.setWinner();
                 return true;
+            }
         }
         return false;
     }
@@ -319,9 +310,6 @@ public class GameImpl implements Game {
      * OBS: Esse método é opcional não será utilizado na correção, mas serve para
      * acompanhar os resultados parciais do jogo
      */
-    public void printTest() {
-        System.out.println(getTableCard().getName());
-    }
 
     public void printBoard() {
 
@@ -353,14 +341,4 @@ public class GameImpl implements Game {
         }
 
     }
-
-    /**
-     * Método que inicializa o tabuleiro já com as peças
-     * 
-     * @param board tabuleiro ainda nao inicializado
-     * @return tabuleiro inicializado, já com as peças dos jogadores e lugares
-     *         vazios
-     */
-
-    // fim da classe
 }

@@ -1,6 +1,7 @@
 package codes.test;
 
 import codes.*;
+import codes.Card;
 
 import org.junit.Assert;
 import org.junit.Before;

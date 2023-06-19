@@ -15,8 +15,6 @@ public class PositionTest {
         Assert.assertEquals(3, position.getCol());
     }
 
-    // falta adc testEquals
-
     @Test
     public void notEqualsTest() {
         Position position1 = new Position(2, 3);

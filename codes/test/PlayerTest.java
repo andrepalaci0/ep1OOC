@@ -1,6 +1,9 @@
 package codes.test;
 
 import codes.*;
+import codes.Player;
+import codes.Card;
+import codes.Position;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -10,7 +13,6 @@ public class PlayerTest {
 
     private Player player;
     private Card[] cards;
-
     @Before
     public void setUp() {
         Card card1 = new Card("card1", Color.RED, new Position[] { new Position(0, 1) });
@@ -33,11 +35,5 @@ public class PlayerTest {
     public void getCardsTest() {
         Assert.assertArrayEquals(cards, player.getCards());
     }
-
-    // falta adc setStarter
-
-    // falta adc isStarter
-
-    // falta adc swapCard e suas exceptions
 
 }
