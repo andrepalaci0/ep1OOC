@@ -3,11 +3,12 @@ package codes;
 public class main{
     public static void main(String[] args) {
 
+        //main de testes:
+        
         Card deck[] = new Card[5]; 
         //new Card("tiger", Color.BLUE, new Position[]{new Position(1, 0), new Position(-2, 0)});
         //new Card("crab", Color.BLUE, new Position[]{new Position(0, -2), new Position(-1, 0), new Position(0, 2)});
         //new Card("dragon", Color.RED, new Position[]{new Position(1, -1), new Position(1, 1), new Position(-1, -2), new Position(-1, 2)});
-       
         deck [0] = new Card("goose", Color.BLUE, new Position[]{new Position(-1, -1), new Position(0, -1), new Position(0, 1), new Position(1, 1)});
         deck [1] = new Card("rabbit", Color.BLUE, new Position[]{new Position(1, -1), new Position(-1, 1), new Position(0, 2)});
         deck [2] = new Card("elephant", Color.RED, new Position[]{new Position(-1, -1), new Position(0, -1), new Position(-1, 1), new Position(0, 1)});
@@ -28,7 +29,6 @@ public class main{
         //    }
         //}
         gameImpl.printBoard();
-        //gameImpl.printTest();
         System.out.println(gameImpl.checkVictory(Color.NONE));
         //System.out.println(gameImpl.getTableCard().getName());
         System.out.println("TABLE CARD COLOR:"+ gameImpl.getTableCard().getColor());
@@ -49,8 +49,18 @@ public class main{
 
         //Position testPosition1 = new Position(3,1);
         //gameImpl.makeMove(deck[3], auxPosition, testPosition1);
-        Player bluePlayer = gameImpl.getBluePlayer();
         Card blueCards[] = gameImpl.getBluePlayer().getCards();
-
+        for (int i = 0; i < blueCards.length; i++) {
+            System.out.println("BLUE CARDS: " + blueCards[i].getName());
+        }
+        Position[] bluePositions = blueCards[0].getPositions();
+        Position blueOgPosition = new Position(0, 1);
+        gameImpl.makeMove(blueCards[0], bluePositions[3], blueOgPosition);
+        gameImpl.printBoard();   
+        //System.out.println(gameImpl.getTableCard().getName());
+        Card red2Cards[] = gameImpl.getRedPlayer().getCards();
+        for (int i = 0; i < red2Cards.length; i++) {
+            System.out.println("RED CARDS: " + red2Cards[i].getName());
+        }
     }
 }

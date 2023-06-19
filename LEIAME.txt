@@ -1,11 +1,29 @@
 Integrantes:
 
 Ana Beatriz Rodrigues Chagas    12734130    
-André Palacio Braga Tivo    13835534
+André Palacio Braga Tivo        13835534
 
-Rodando o ep:
+ATENÇÃO: Todos os comandos de compilação e execução mostrados a seguir devem ser executados na RAIZ (/ep1OOC) do programa.
+         Caso não sejam executados na raiz, não funcionarão da maneira desejada.
+        
+Rodando o EP:
 
-$javac *.java
-$java main 
-      ^ pode ser GameImpl também, dependendo de como está sendo testado 
-      ^compilando sem o Junit
+$javac codes/*.java
+    ^compila
+$java codes.main
+            ^executa
+            ^não precisa ser necessariamente a main, pode ser GameImpl ou outros.
+
+
+Rodando os Testes Unitários (JUNIT):
+
+$javac -cp .:./codes/lib/junit-4.13.2.jar:./codes/lib/hamcrest-core-1.3.jar codes/test/CardTest.java
+    ^compila                                                                              ^Não necessariamente é CardTest, e sim o nome
+                                                                                           de qqler arquivo de teste 
+                                                                                           (ex: codes/test/ArquivoTest.java)
+
+$java -cp .:./codes/lib/junit-4.13.2.jar:./codes/lib/hamcrest-core-1.3.jar org.junit.runner.JUnitCore codes.test.CardTest
+    ^executa o teste unitário                                                                                   ^Não necessariamente é CardTest, e sim o nome
+                                                                                                                  de qqler arquivo de teste 
+                                                                                                                  (ex: codes.test.ArquivoTest)
+
